@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Night Out</string>
+
+    <!-- Map Search -->
     <string name="title_activity_maps">Map</string>
+    <string name="btn_search">Search</string>
+    <string name="btn_restaurants">Nearby Restaurants</string>
 </resources>
