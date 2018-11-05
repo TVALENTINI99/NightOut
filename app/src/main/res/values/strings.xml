@@ -5,4 +5,5 @@
     <string name="title_activity_maps">Map</string>
     <string name="btn_search">Search</string>
     <string name="btn_restaurants">Nearby Restaurants</string>
+    <string name="showing_restaurants">Showing Nearby Restaurants</string>
 </resources>
