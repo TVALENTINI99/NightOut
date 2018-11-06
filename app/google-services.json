@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "215685674901",
+    "firebase_url": "https://just-coda-221521.firebaseio.com",
+    "project_id": "just-coda-221521",
+    "storage_bucket": "just-coda-221521.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:215685674901:android:32383f8ee90d82c4",
+        "android_client_info": {
+          "package_name": "edu.psu.sweng888.nightout"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "215685674901-1bbc658n8pbr4c83b7ga97aehsed332l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.psu.sweng888.nightout",
+            "certificate_hash": "e7e670e2fedefd3829287658f98cf23a37823b0b"
+          }
+        },
+        {
+          "client_id": "215685674901-ui2cv0fqnte1u7011ovetnht81cpv17o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqZNFOCRYrTIrw3X3sSAtJvNNcbc8SS8Q"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "215685674901-ui2cv0fqnte1u7011ovetnht81cpv17o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

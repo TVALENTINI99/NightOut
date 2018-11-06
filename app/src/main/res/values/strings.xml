@@ -23,4 +23,5 @@
     <string name="text_view_place">Burgatory</string>
     <string name="text_view_total">$30.00</string>
     <string name="btn_pay_with_paypal">Pay With Paypal</string>
+    <string name="title_activity_maps2">Map</string>
 </resources>
