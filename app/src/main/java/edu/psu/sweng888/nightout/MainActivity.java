@@ -9,18 +9,42 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity {
 
     private Button mBtnSearch = null;
+    private Button mBtnLogin = null;
+    private Button mBtnReserverations=null;
+    private Button mBtnInvoices=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mBtnSearch = findViewById(R.id.btn_search);
+        mBtnSearch = (Button) findViewById(R.id.btn_search);
+        mBtnLogin = (Button) findViewById(R.id.btn_login);
+        mBtnReserverations = (Button) findViewById(R.id.btn_view_reservations);
+        mBtnInvoices = (Button) findViewById(R.id.btn_view_invoices);
 
         mBtnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, MapsActivity.class));
+            }
+        });
+        mBtnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            }
+        });
+        mBtnReserverations.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, CurrentReservationsActivity.class));
+            }
+        });
+        mBtnInvoices.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, CurrentInvoicesActivity.class));
             }
         });
     }

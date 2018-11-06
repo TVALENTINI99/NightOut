@@ -1,9 +1,26 @@
 <resources>
     <string name="app_name">Night Out</string>
 
+    <!-- Main -->
+    <string name="btn_search_restaurants">Search For Places</string>
+    <string name="btn_view_reservations">View Current Reservations</string>
+    <string name="btn_login">Login</string>
+    <string name="btn_view_invoices">View Invoices</string>
+    <!-- Login -->
+    <string name="btn_login_facebook">Login With Facebook</string>
+    <string name="btn_login_google">Login With Google</string>
     <!-- Map Search -->
     <string name="title_activity_maps">Map</string>
     <string name="btn_search">Search</string>
     <string name="btn_restaurants">Nearby Restaurants</string>
     <string name="showing_restaurants">Showing Nearby Restaurants</string>
+    <!-- Reservations-->
+    <string name="text_view_date">MM/DD/YYYY</string>
+    <string name="text_view_location">123 Easy Street Anytown USA</string>
+    <string name="text_view_time">11:00 AM</string>
+    <!-- Invoices -->
+    <string name="text_view_invoice_date">MM/DD/YYYY</string>
+    <string name="text_view_place">Burgatory</string>
+    <string name="text_view_total">$30.00</string>
+    <string name="btn_pay_with_paypal">Pay With Paypal</string>
 </resources>
