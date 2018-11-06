@@ -30,7 +30,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static final int REQUEST_LOCATION_CODE = 99;
-    private static final int PROXIMITY_RADIUS = 5000;
+    private static final int PROXIMITY_RADIUS = 2000;
     private static final String TAG = "CurrentLocation";
 
     private GoogleMap mMap;
@@ -125,7 +125,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LatLng currentLocation = new LatLng(latitude, longitude);
         currentLocationMarker = mMap.addMarker(new MarkerOptions().position(currentLocation).title("My Location"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
     }
 
     public void onNearbyRestaurantsClicked(View v) {
