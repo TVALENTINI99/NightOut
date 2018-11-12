@@ -1,54 +1,96 @@
 package edu.psu.sweng888.nightout;
 
-import android.Manifest;
 import android.content.pm.PackageManager;
-import android.location.Criteria;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.os.Bundle;
+
+ import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import edu.psu.sweng888.nightout.maps.GetNearbyPlaces;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, LocationListener {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, PlaceSelectionListener {
 
-    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-    private static final int REQUEST_LOCATION_CODE = 99;
-    private static final int PROXIMITY_RADIUS = 2000;
     private static final String TAG = "CurrentLocation";
+    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
 
+    private static final int PROXIMITY_RADIUS = 2000;
+    private static final String PLACES_API_KEY = "AIzaSyCY8bnxF3qpnrzoT-vnErkba0soGT0Jy8w";
+
+    private boolean mLocationPermissionGranted;
     private GoogleMap mMap;
-    protected LocationManager locationManager;
     private double latitude, longitude;
+    private FusedLocationProviderClient mFusedLocationClient;
+    private LocationRequest mLocationRequest;
+    private LocationCallback mLocationCallback;
 
     private Marker currentLocationMarker;
-    private Button mNearbyRestaurantButton = null;
+    private PlaceAutocompleteFragment mAutoCompleteFragment;
+
+    private List<Marker> mMarkers = new ArrayList<Marker>();
 
     @Override    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (!isGooglePlayServicesAvailable()) {
-            return;
-        }
+//        if (!isGooglePlayServicesAvailable()) {
+//            return;
+//        }
         setContentView(R.layout.activity_maps);
 
-        mNearbyRestaurantButton = findViewById(R.id.btn_restaurants);
+        mAutoCompleteFragment = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.fragment_autocomplete_search);
+        mAutoCompleteFragment.setOnPlaceSelectedListener(this);
+
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+        // Subscribe to Location updates
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(30000); // 30 second interval
+        mLocationRequest.setFastestInterval(5000); // 5 seconds
+        mLocationRequest.setSmallestDisplacement(50); // 50 meters
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+
+        mLocationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                if (locationResult == null) {
+                    return;
+                }
+                for (Location location : locationResult.getLocations()) {
+                    onLocationChanged(location);
+                }
+            };
+        };
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -56,6 +98,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        //stop location updates when Activity is no longer active
+        stopLocationUpdates();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startLocationUpdates();
+    }
 
     /**     * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -69,51 +124,109 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        displayCurrentLocation(mMap);
+        // Prompt the user for location permissions
+        getLocationPermission();
+
+        // Turn on the My Location layer and the related control on the map.
+        updateLocationUI();
+
+        // Get the current location of the device and set the position of the map.
+        displayCurrentLocation();
+
+        startLocationUpdates();
     }
 
-    private void displayCurrentLocation(GoogleMap mMap) {
-
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION_CODE);
+    private void startLocationUpdates() {
+        if (ContextCompat.checkSelfPermission(this.getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, null /* Looper */);
         }
-
-        mMap.setMyLocationEnabled(true);
-        mMap.getUiSettings().setCompassEnabled(true);
-        mMap.getUiSettings().setZoomControlsEnabled(true);
-
-        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-
-        Criteria criteria = new Criteria();
-        String bestProvider = locationManager.getBestProvider(criteria, true);
-        Location location = locationManager.getLastKnownLocation(bestProvider);
-
-        if (location != null) {
-            onLocationChanged(location);
-
+        else {
+            getLocationPermission();
         }
-
-        locationManager.requestLocationUpdates(bestProvider, 20000, 100, this);
-
     }
 
-    private boolean isGooglePlayServicesAvailable() {
-        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
-        int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
-        if (resultCode != ConnectionResult.SUCCESS) {
-            if (apiAvailability.isUserResolvableError(resultCode)) {
-                apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST).show();
-            } else {
-                Log.i(TAG, "This device is not supported.");
-                finish();
-            }
-            return false;
+    private void stopLocationUpdates() {
+        if (mFusedLocationClient != null) {
+            mFusedLocationClient.removeLocationUpdates(mLocationCallback);
         }
-        return true;
+    }
+
+//    private boolean isGooglePlayServicesAvailable() {
+//        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
+//        int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
+//
+//        if (resultCode != ConnectionResult.SUCCESS) {
+//            if (apiAvailability.isUserResolvableError(resultCode)) {
+//                apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST).show();
+//            }
+//            else {
+//                Log.i(TAG, "This device is not supported.");
+//                finish();
+//            }
+//            return false;
+//        }
+//
+//        return true;
+//    }
+
+    private void getLocationPermission() {
+        /*
+         * Request location permission, so that we can get the location of the
+         * device. The result of the permission request is handled by a callback,
+         * onRequestPermissionsResult.
+         */
+        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            mLocationPermissionGranted = true;
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+        }
     }
 
     @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String permissions[],
+                                           @NonNull int[] grantResults) {
+        mLocationPermissionGranted = false;
+        switch (requestCode) {
+            case PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    mLocationPermissionGranted = true;
+                }
+            }
+        }
+        updateLocationUI();
+    }
+
+    private void displayCurrentLocation() {
+
+        try {
+            if (mLocationPermissionGranted) {
+                Task locationResult = mFusedLocationClient.getLastLocation();
+                locationResult.addOnCompleteListener(this, new OnCompleteListener() {
+                    @Override
+                    public void onComplete(@NonNull Task task) {
+                        if (task.isSuccessful()) {
+                            // Set the map's camera position to the current location of the device.
+                            Location location = (Location) task.getResult();
+                            onLocationChanged(location);
+                        } else {
+                            Log.e(TAG, "Exception: %s", task.getException());
+                        }
+                    }
+                });
+            }
+        } catch(SecurityException e)  {
+            Log.e("Exception: %s", e.getMessage());
+        }
+    }
+
     public void onLocationChanged(Location location) {
         latitude = location.getLatitude();
         longitude = location.getLongitude();
@@ -129,13 +242,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     public void onNearbyRestaurantsClicked(View v) {
-        Object data[] = new Object[2];
+        Object data[] = new Object[3];
         GetNearbyPlaces getNearbyPlaces = new GetNearbyPlaces();
-//        mMap.clear();
+
+        // Clear the map
+        for (Marker marker : mMarkers ) {
+            marker.remove();
+        }
+        mMarkers.clear();
 
         String url = buildRequestUrl(latitude, longitude, "restaurant");
         data[0] = mMap;
         data[1] = url;
+        data[2] = mMarkers;
 
         getNearbyPlaces.execute(data);
         Toast.makeText(this, R.string.showing_restaurants, Toast.LENGTH_SHORT).show();
@@ -147,24 +266,55 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         requestUrl.append("&radius=" + PROXIMITY_RADIUS);
         requestUrl.append("&types=" + type);
         requestUrl.append("&sensor=true");
-        requestUrl.append("&key=");
-        requestUrl.append("AIzaSyCY8bnxF3qpnrzoT-vnErkba0soGT0Jy8w");
+        requestUrl.append("&key=" + PLACES_API_KEY);
 
         return requestUrl.toString();
     }
 
     @Override
-    public void onStatusChanged(String s, int i, Bundle bundle) {
+    public void onPlaceSelected(Place place) {
+        LatLng location = place.getLatLng();
+        String name = place.getName().toString();
+        String address = place.getAddress().toString();
 
+        stopLocationUpdates();
+
+        // Clear the map
+        for (Marker marker : mMarkers ) {
+            marker.remove();
+        }
+        mMarkers.clear();
+
+        Marker marker = mMap.addMarker(new MarkerOptions().position(location).title(name + " : " + address)
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+
+        mMarkers.add(marker);
     }
 
     @Override
-    public void onProviderEnabled(String s) {
-
+    public void onError(Status status) {
+        Toast.makeText(getApplicationContext(), "" + status.toString(), Toast.LENGTH_LONG).show();
     }
 
-    @Override
-    public void onProviderDisabled(String s) {
-
+    private void updateLocationUI() {
+        if (mMap == null) {
+            return;
+        }
+        try {
+            if (mLocationPermissionGranted) {
+                mMap.setMyLocationEnabled(true);
+                mMap.getUiSettings().setMyLocationButtonEnabled(true);
+                mMap.getUiSettings().setCompassEnabled(true);
+                mMap.getUiSettings().setZoomControlsEnabled(true);
+            } else {
+                mMap.setMyLocationEnabled(false);
+                mMap.getUiSettings().setMyLocationButtonEnabled(false);
+                getLocationPermission();
+            }
+        } catch (SecurityException e)  {
+            Log.e("Exception: %s", e.getMessage());
+        }
     }
 }

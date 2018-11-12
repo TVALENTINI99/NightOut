@@ -6,6 +6,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
@@ -17,11 +18,13 @@ public class GetNearbyPlaces extends AsyncTask<Object, String, String> {
     private GoogleMap mMap;
     private String placesData;
     private String url;
+    private List<Marker> mMarkers;
 
     @Override
     protected String doInBackground(Object... objects) {
         mMap = (GoogleMap) objects[0];
         url = (String) objects[1];
+        mMarkers = (List<Marker>) objects[2];
 
         RequestUrl requestUrl = new RequestUrl();
         try {
@@ -43,6 +46,7 @@ public class GetNearbyPlaces extends AsyncTask<Object, String, String> {
     }
 
     private void showNearbyPlaces(List<HashMap<String, String>> nearbyPlacesList) {
+
         for (HashMap<String, String> place : nearbyPlacesList) {
 
             String name = place.get("place_name");
@@ -51,10 +55,11 @@ public class GetNearbyPlaces extends AsyncTask<Object, String, String> {
             double longitude = Double.parseDouble(place.get("lng"));
 
             LatLng location = new LatLng(latitude, longitude);
-            mMap.addMarker(new MarkerOptions().position(location).title(name + " : " + vicinity)
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-            //mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
+            Marker marker = mMap.addMarker(new MarkerOptions().position(location).title(name + " : " + vicinity)
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
             mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+
+            mMarkers.add(marker);
         }
     }
 }
