@@ -8,7 +8,9 @@
     <string name="btn_view_invoices">View Invoices</string>
     <!-- Login -->
     <string name="btn_login_facebook">Login With Facebook</string>
+    <string name="btn_logout_facebook">Sign Out of Facebook</string>
     <string name="btn_login_google">Login With Google</string>
+    <string name="btn_logout_google">Sign Out of Google</string>
     <!-- Map Search -->
     <string name="title_activity_maps">Map</string>
     <string name="btn_search">Search</string>
@@ -24,4 +26,9 @@
     <string name="text_view_total">$30.00</string>
     <string name="btn_pay_with_paypal">Pay With Paypal</string>
     <string name="title_activity_maps2">Map</string>
+
+    <string name="facebook_app_id">1937944086292576</string>
+    <string name="fb_login_protocol_scheme">fb1937944086292576</string>
+
+
 </resources>
