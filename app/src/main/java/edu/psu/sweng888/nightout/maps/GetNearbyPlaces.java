@@ -53,10 +53,12 @@ public class GetNearbyPlaces extends AsyncTask<Object, String, String> {
             String vicinity = place.get("vicinity");
             double latitude = Double.parseDouble(place.get("lat"));
             double longitude = Double.parseDouble(place.get("lng"));
+            String id = place.get("place_id");
 
             LatLng location = new LatLng(latitude, longitude);
-            Marker marker = mMap.addMarker(new MarkerOptions().position(location).title(name + " : " + vicinity)
+            Marker marker = mMap.addMarker(new MarkerOptions().position(location).title(name).snippet(vicinity)
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+            marker.setTag(id);
             mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
 
             mMarkers.add(marker);

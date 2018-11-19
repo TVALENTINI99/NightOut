@@ -7,20 +7,11 @@
 
     <fragment
         android:id="@+id/fragment_autocomplete_search"
-        android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+        android:name="com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true" />
-
-    <!--Button
-        android:id="@+id/button_search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/fragment_autocomplete_search"
-        android:text="@string/btn_search" /-->
 
     <Button
         android:id="@+id/btn_restaurants"

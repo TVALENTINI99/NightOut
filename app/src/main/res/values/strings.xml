@@ -26,6 +26,8 @@
     <string name="text_view_total">$30.00</string>
     <string name="btn_pay_with_paypal">Pay With Paypal</string>
     <string name="title_activity_maps2">Map</string>
+    <!-- Restaurant Details -->
+    <string name="btn_reserve">Make a Reservation</string>
 
     <string name="facebook_app_id">1937944086292576</string>
     <string name="fb_login_protocol_scheme">fb1937944086292576</string>
