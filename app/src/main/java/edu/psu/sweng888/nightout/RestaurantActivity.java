@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +25,10 @@ import com.google.android.gms.location.places.Places;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+import java.util.ArrayList;
+
+import edu.psu.sweng888.nightout.adapter.RecyclerViewAdapter;
+
 public class RestaurantActivity extends AppCompatActivity {
 
     private static final String TAG = "RestaurantActivity";
@@ -30,8 +36,10 @@ public class RestaurantActivity extends AppCompatActivity {
     private GeoDataClient mGeoDataClient;
     private TextView mPlaceNameTextView;
     private TextView mPlaceAddressTextView;
-    private ImageView mImageView;
     private Button mReservationBtn;
+
+    private ArrayList<Bitmap> photoList = new ArrayList<>();
+    private RecyclerViewAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +50,6 @@ public class RestaurantActivity extends AppCompatActivity {
 
         mPlaceNameTextView = findViewById(R.id.text_view_place_name);
         mPlaceAddressTextView = findViewById(R.id.text_view_place_address);
-        mImageView = findViewById(R.id.image_view_place);
         mReservationBtn = findViewById(R.id.btn_reserve);
 
         Intent intent = getIntent();
@@ -54,6 +61,7 @@ public class RestaurantActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     PlaceBufferResponse placeBuffer = task.getResult();
                     Place place = placeBuffer.get(0);
+                    getPhotos(place.getId());
                     onPlaceFound(place);
                     placeBuffer.release();
                 }
@@ -62,6 +70,14 @@ public class RestaurantActivity extends AppCompatActivity {
                 }
             }
         });
+
+        RecyclerView recyclerView = findViewById(R.id.horizontal_recycler_view);
+        adapter = new RecyclerViewAdapter(this, photoList);
+//        adapter.notifyDataSetChanged();
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        recyclerView.setAdapter(adapter);
+
         //TODO: Implement reservations from here
         mReservationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,10 +88,17 @@ public class RestaurantActivity extends AppCompatActivity {
     }
     //TODO: Add more place details, add multiple scrollable photos
     private void onPlaceFound(Place place) {
+
+//        getPhotos(place.getId());
+
         mPlaceNameTextView.setText(place.getName());
         mPlaceAddressTextView.setText(place.getAddress());
 
-        mGeoDataClient.getPlacePhotos(place.getId()).addOnCompleteListener(new OnCompleteListener<PlacePhotoMetadataResponse>() {
+    }
+
+    private void getPhotos(String placeId) {
+
+        mGeoDataClient.getPlacePhotos(placeId).addOnCompleteListener(new OnCompleteListener<PlacePhotoMetadataResponse>() {
             @Override
             public void onComplete(@NonNull Task<PlacePhotoMetadataResponse> task) {
                 // Get the list of photos.
@@ -83,19 +106,35 @@ public class RestaurantActivity extends AppCompatActivity {
                 // Get the PlacePhotoMetadataBuffer (metadata for all of the photos).
                 PlacePhotoMetadataBuffer photoMetadataBuffer = photos.getPhotoMetadata();
                 // Get the first photo in the list.
-                PlacePhotoMetadata photoMetadata = photoMetadataBuffer.get(0);
-                // Get the attribution text.
-                CharSequence attribution = photoMetadata.getAttributions();
-                // Get a full-size bitmap for the photo.
-                Task<PlacePhotoResponse> photoResponse = mGeoDataClient.getPhoto(photoMetadata);
-                photoResponse.addOnCompleteListener(new OnCompleteListener<PlacePhotoResponse>() {
-                    @Override
-                    public void onComplete(@NonNull Task<PlacePhotoResponse> task) {
-                        PlacePhotoResponse photo = task.getResult();
-                        Bitmap bitmap = photo.getBitmap();
-                        mImageView.setImageBitmap(bitmap);
-                    }
-                });
+//                PlacePhotoMetadata photoMetadata = photoMetadataBuffer.get(0);
+//                // Get the attribution text.
+//                CharSequence attribution = photoMetadata.getAttributions();
+//                // Get a full-size bitmap for the photo.
+//                Task<PlacePhotoResponse> photoResponse = mGeoDataClient.getPhoto(photoMetadata);
+//                photoResponse.addOnCompleteListener(new OnCompleteListener<PlacePhotoResponse>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<PlacePhotoResponse> task) {
+//                        PlacePhotoResponse photo = task.getResult();
+//                        Bitmap bitmap = photo.getBitmap();
+//                        photoList.add(bitmap);
+//                        adapter.notifyDataSetChanged();
+//                    }
+//                });
+
+                for (int i = 0; i < photoMetadataBuffer.getCount(); i++) {
+
+                    PlacePhotoMetadata photoMetadata = photoMetadataBuffer.get(i);
+                    Task<PlacePhotoResponse> photoResponse = mGeoDataClient.getPhoto(photoMetadata);
+                    photoResponse.addOnCompleteListener(new OnCompleteListener<PlacePhotoResponse>() {
+                        @Override
+                        public void onComplete(@NonNull Task<PlacePhotoResponse> task) {
+                            PlacePhotoResponse photo = task.getResult();
+                            Bitmap bitmap = photo.getBitmap();
+                            photoList.add(bitmap);
+                            adapter.notifyDataSetChanged();
+                        }
+                    });
+                }
             }
         });
     }
