@@ -52,7 +52,7 @@ public class RestaurantActivity extends AppCompatActivity {
         mPlaceAddressTextView = findViewById(R.id.text_view_place_address);
         mReservationBtn = findViewById(R.id.btn_reserve);
 
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         String placeId = intent.getStringExtra("PLACE_ID");
 
         mGeoDataClient.getPlaceById(placeId).addOnCompleteListener(new OnCompleteListener<PlaceBufferResponse>() {
@@ -78,11 +78,13 @@ public class RestaurantActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setAdapter(adapter);
 
-        //TODO: Implement reservations from here
         mReservationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(RestaurantActivity.this, "Button Clicked", Toast.LENGTH_SHORT).show();
+                Intent reservationIntent =new Intent(RestaurantActivity.this,ReservationActivity.class);
+                reservationIntent.putExtra("RES_NAME",mPlaceNameTextView.getText().toString());
+                reservationIntent.putExtra("RES_ADDR",mPlaceAddressTextView.getText().toString());
+                startActivity(reservationIntent);
             }
         });
     }

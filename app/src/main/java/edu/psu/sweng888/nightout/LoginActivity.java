@@ -57,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
     private CallbackManager mFacebookCallbackManager=null;
 
     private FirebaseAuth mAuth;
+    private Intent callerIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +71,8 @@ public class LoginActivity extends AppCompatActivity {
 
         mBtnLoginFacebook = (LoginButton) findViewById(R.id.btn_login_facebook);
         mBtnLoginGoogle = (SignInButton) findViewById(R.id.btn_login_google);
+
+        callerIntent=getIntent();
 
         getGoogleTextView();
 
@@ -238,6 +241,10 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
             }
+            if (callerIntent.hasExtra("class")){
+                finish();
+            }
         }
+
     }
 }
