@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 import edu.psu.sweng888.nightout.R;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
+public class PlaceRecyclerViewAdapter extends RecyclerView.Adapter<PlaceRecyclerViewAdapter.MyViewHolder> {
 
     private Context context;
     private ArrayList<Bitmap> bitmapList;
@@ -29,7 +29,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
     }
 
-    public RecyclerViewAdapter(Context context, ArrayList<Bitmap> bitmapList) {
+    public PlaceRecyclerViewAdapter(Context context, ArrayList<Bitmap> bitmapList) {
         this.context = context;
         this.bitmapList = bitmapList;
     }

@@ -10,9 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.location.places.GeoDataClient;
 import com.google.android.gms.location.places.Place;
@@ -27,7 +25,7 @@ import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
 
-import edu.psu.sweng888.nightout.adapter.RecyclerViewAdapter;
+import edu.psu.sweng888.nightout.adapter.PlaceRecyclerViewAdapter;
 
 public class RestaurantActivity extends AppCompatActivity {
 
@@ -39,7 +37,7 @@ public class RestaurantActivity extends AppCompatActivity {
     private Button mReservationBtn;
 
     private ArrayList<Bitmap> photoList = new ArrayList<>();
-    private RecyclerViewAdapter adapter;
+    private PlaceRecyclerViewAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +70,7 @@ public class RestaurantActivity extends AppCompatActivity {
         });
 
         RecyclerView recyclerView = findViewById(R.id.horizontal_recycler_view);
-        adapter = new RecyclerViewAdapter(this, photoList);
+        adapter = new PlaceRecyclerViewAdapter(this, photoList);
 //        adapter.notifyDataSetChanged();
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));

@@ -1,4 +1,4 @@
-package edu.psu.sweng888.nightout.models;
+package edu.psu.sweng888.nightout.db.models;
 
 import java.util.HashMap;
 import java.util.Map;
