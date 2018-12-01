@@ -1,6 +1,7 @@
 package edu.psu.sweng888.nightout.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -15,9 +16,10 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import edu.psu.sweng888.nightout.R;
+import edu.psu.sweng888.nightout.ReservationDetailsActivity;
 import edu.psu.sweng888.nightout.db.models.Reservation;
 
-public class ReservationRecyclerViewAdapter extends RecyclerView.Adapter<ReservationRecyclerViewAdapter.ViewHolder> {
+public class ReservationRecyclerViewAdapter extends RecyclerView.Adapter<ReservationRecyclerViewAdapter.ViewHolder>{
 
     private Context context;
 
@@ -42,13 +44,24 @@ public class ReservationRecyclerViewAdapter extends RecyclerView.Adapter<Reserva
         TextView textViewReservationTime;
         TextView textViewReservationDate;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull final View itemView) {
             super(itemView);
 
             parentLayout = itemView.findViewById(R.id.reservationCardView);
             textViewRestaurantName = itemView.findViewById(R.id.txt_view_restauraunt_name);
             textViewReservationTime = itemView.findViewById(R.id.txt_view_reservation_time);
             textViewReservationDate =  itemView.findViewById(R.id.txt_view_reservation_date);
+
+            parentLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(itemView.getContext(),ReservationDetailsActivity.class);
+                    intent.putExtra("RES_NAME",textViewRestaurantName.getText());
+                    intent.putExtra("RES_TIME",textViewReservationTime.getText());
+                    intent.putExtra("RES_DATE",textViewReservationDate.getText());
+                    itemView.getContext().startActivity(intent);
+                }
+            });
         }
     }
 
@@ -75,9 +88,9 @@ public class ReservationRecyclerViewAdapter extends RecyclerView.Adapter<Reserva
         Log.d(TAG, "onBindViewHolder has been called");
         Reservation reservationData = reservationDataList.get(position);
 
-        viewHolder.textViewRestaurantName.setText("Location: "+reservationData.getLocationName());
-        viewHolder.textViewReservationTime.setText("Time: "+reservationData.getTime());
-        viewHolder.textViewReservationTime.setText("Date: "+reservationData.getDate());
+        viewHolder.textViewRestaurantName.setText(reservationData.getLocationName());
+        viewHolder.textViewReservationTime.setText(reservationData.getTime());
+        viewHolder.textViewReservationDate.setText(reservationData.getDate());
 
         //Toast.makeText(context, reservationData.getLocation().toString(), Toast.LENGTH_SHORT );
     }

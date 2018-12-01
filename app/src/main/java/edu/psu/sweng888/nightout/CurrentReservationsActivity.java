@@ -7,6 +7,8 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -25,6 +27,7 @@ public class CurrentReservationsActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private ReservationRecyclerViewAdapter recyclerViewAdapter;
     private ArrayList<Reservation> reservationDataList=new ArrayList<>();
+    private static final String TAG = "CurrentReservationsActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

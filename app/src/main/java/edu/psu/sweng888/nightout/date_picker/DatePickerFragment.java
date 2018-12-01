@@ -20,7 +20,7 @@ public class DatePickerFragment extends DialogFragment
             mdatePickerInteractionInterface = (DatePickerInteractionInterface) activity;
         }
         catch (final ClassCastException e) {
-            throw new ClassCastException(activity.toString() + " TimePickerInteractionInterface");
+            throw new ClassCastException(activity.toString() + " DatePickerInteractionInterface");
         }
     }
 
@@ -37,7 +37,7 @@ public class DatePickerFragment extends DialogFragment
     }
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
-        String date = String.format("%02d/%02d/%04d",month,day,year);
+        String date = String.format("%02d/%02d/%04d",month+1,day,year);
         mdatePickerInteractionInterface.onDateComplete(date);
     }
 }
