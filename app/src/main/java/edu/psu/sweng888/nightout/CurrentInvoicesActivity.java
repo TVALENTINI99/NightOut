@@ -36,6 +36,7 @@ public class CurrentInvoicesActivity extends AppCompatActivity {
 
         mFirebaseAccess=new FirebaseAccess();
         mAuth=FirebaseAuth.getInstance();
+        //invoiceLoadingForTesting();
         FirebaseUser user = mAuth.getCurrentUser();
         if(user == null){
             Intent loginIntent = new Intent(CurrentInvoicesActivity.this,LoginActivity.class);
@@ -65,6 +66,13 @@ public class CurrentInvoicesActivity extends AppCompatActivity {
         this.mRecyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayoutManager.VERTICAL));
         this.mRecyclerView.setAdapter(recyclerViewAdapter);
 
+    }
+    private void invoiceLoadingForTesting(){
+        FirebaseUser user =mAuth.getCurrentUser();
+        Invoice invoice1=new Invoice(user.getUid(),user.getDisplayName(),"Burgatory","12/01/2018","30.00");
+        Invoice invoice2=new Invoice(user.getUid(),user.getDisplayName(),"Harry's","12/02/2018","52.97");
+        mFirebaseAccess.addInvoicetoDB(invoice1);
+        mFirebaseAccess.addInvoicetoDB(invoice2);
     }
 
 }

@@ -56,6 +56,15 @@ public class FirebaseAccess {
         db.updateChildren(childUpdates);
 
     }
+    public void addInvoicetoDB(Invoice invoice){
+        String key = db.child("invoices").push().getKey();
+        Map<String,Object> invoiceVals =invoice.toMap();
+
+        Map<String,Object> childUpdates = new HashMap<>();
+        childUpdates.put("/invoices/"+key,invoiceVals);
+        db.updateChildren(childUpdates);
+
+    }
 
     public void readReservationsFromDB(final String Uid, final FirebaseCallbackInterface firebaseCallbackInterface){
 

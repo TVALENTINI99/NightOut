@@ -1,5 +1,8 @@
 package edu.psu.sweng888.nightout.db.models;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Invoice {
     public String Id;
     public String Name;
@@ -13,6 +16,16 @@ public class Invoice {
         LocationName = locationName;
         Date = date;
         Total = total;
+    }
+    public Map<String,Object> toMap(){
+        HashMap<String,Object> result= new HashMap<>();
+        result.put("Id",Id);
+        result.put("Name",Name);
+        result.put("LocationName",LocationName);
+        result.put("Date",Date);
+        result.put("Total",Total);
+        return result;
+
     }
 
     public String getId() {
