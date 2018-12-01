@@ -16,12 +16,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import edu.psu.sweng888.nightout.db.models.Invoice;
 import edu.psu.sweng888.nightout.db.models.Reservation;
 
 public class FirebaseAccess {
 
     private DatabaseReference db;
     private ArrayList<Reservation> reservations;
+    private ArrayList<Invoice> invoices;
 
     public DatabaseReference getDb() {
         return db;
@@ -32,7 +34,10 @@ public class FirebaseAccess {
         return reservations;
     }
 
-
+    public ArrayList<Invoice> getInvoices(String uid, FirebaseCallbackInterface callbackInterface) {
+        readInvoicesFromDB(uid,callbackInterface);
+        return invoices;
+    }
 
     public FirebaseAccess() {
         this.db=FirebaseDatabase.getInstance().getReference();
@@ -51,13 +56,14 @@ public class FirebaseAccess {
         db.updateChildren(childUpdates);
 
     }
+
     public void readReservationsFromDB(final String Uid, final FirebaseCallbackInterface firebaseCallbackInterface){
 
         DatabaseReference resRef=db.child("reservations");
         resRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ArrayList<Reservation>value=parseData((Map<String,Object>)dataSnapshot.getValue(),Uid);
+                ArrayList<Reservation>value=parseReservationData((Map<String,Object>)dataSnapshot.getValue(),Uid);
                 firebaseCallbackInterface.onCallback(value);
 
             }
@@ -67,10 +73,26 @@ public class FirebaseAccess {
 
             }
         });
-
-
     }
-    public ArrayList<Reservation> parseData(Map<String,Object> values,String id){
+    public void readInvoicesFromDB(final String Uid, final FirebaseCallbackInterface firebaseCallbackInterface){
+
+        DatabaseReference resRef=db.child("invoices");
+        resRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ArrayList<Invoice>value=parseInvoiceData((Map<String,Object>)dataSnapshot.getValue(),Uid);
+                firebaseCallbackInterface.onCallback(value);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public ArrayList<Reservation> parseReservationData(Map<String,Object> values,String id){
         ArrayList<Reservation> UserReservations = new ArrayList<>();
         for (Map.Entry<String,Object> entry : values.entrySet()){
             Map singleReservation = (Map) entry.getValue();
@@ -85,6 +107,21 @@ public class FirebaseAccess {
             }
         }
         return UserReservations;
+    }
+    public ArrayList<Invoice> parseInvoiceData(Map<String,Object> values,String id){
+        ArrayList<Invoice> UserInvoices = new ArrayList<>();
+        for (Map.Entry<String,Object> entry : values.entrySet()){
+            Map singleInvoice = (Map) entry.getValue();
+            if(((String)singleInvoice.get("Id")).equals(id.toString())){
+                Invoice invoice= new Invoice((String)singleInvoice.get("Id"),
+                        (String)singleInvoice.get("Name"),
+                        (String)singleInvoice.get("LocationName"),
+                        (String)singleInvoice.get("Date"),
+                        (String)singleInvoice.get("Total"));
+                UserInvoices.add(invoice);
+            }
+        }
+        return UserInvoices;
     }
 
 }

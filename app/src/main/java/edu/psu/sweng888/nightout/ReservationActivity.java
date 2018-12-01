@@ -33,7 +33,6 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
     private TextView mPlaceAddressTextView;
 
     private FirebaseAuth mAuth;
-    //private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +41,6 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
         final Intent intent = getIntent();
 
         mAuth = FirebaseAuth.getInstance();
-        //mDatabase=FirebaseDatabase.getInstance().getReference();
 
         mReservationButton= findViewById(R.id.button_make_reservation);
         mDateEditText=findViewById(R.id.editText_reservation_date);
@@ -71,7 +69,6 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
         mReservationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int requestCode;
                 FirebaseUser user = mAuth.getCurrentUser();
                 if(user == null){
                     Intent loginIntent = new Intent(ReservationActivity.this,LoginActivity.class);
@@ -81,18 +78,12 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
                     user=mAuth.getCurrentUser();
                 }
                 FirebaseAccess mFirebaseHelper = new FirebaseAccess();
-                //String key = mDatabase.child("reservations").push().getKey();
                 Reservation reservation = new Reservation(user.getUid(),
                         user.getDisplayName(),
                         mPlaceNameTextView.getText().toString(),
                         mPlaceAddressTextView.getText().toString(),
                         mDateEditText.getText().toString(),
                         mTimeEditText.getText().toString());
-                /*Map<String,Object> reservationVals =reservation.toMap();
-
-                Map<String,Object> childUpdates = new HashMap<>();
-                childUpdates.put("/reservations/"+key,reservationVals);
-                mDatabase.updateChildren(childUpdates);*/
                 mFirebaseHelper.addReservationtoDB(reservation);
                 finish();
             }

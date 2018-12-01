@@ -67,7 +67,8 @@
         <activity android:name=".CurrentInvoicesActivity" />
         <activity android:name=".RestaurantActivity" />
         <activity android:name=".ReservationActivity" />
-        <activity android:name=".ReservationDetailsActivity"></activity>
+        <activity android:name=".ReservationDetailsActivity" />
+        <activity android:name=".InvoiceDetailsActivity"></activity>
     </application>
 
 </manifest>

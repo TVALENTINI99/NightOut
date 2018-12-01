@@ -9,22 +9,31 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
+import edu.psu.sweng888.nightout.db.FirebaseAccess;
+import edu.psu.sweng888.nightout.db.FirebaseCallbackInterface;
+import edu.psu.sweng888.nightout.db.models.Reservation;
 
 public class ReservationDetailsActivity extends AppCompatActivity implements View.OnClickListener {
 
     private String mName;
     private String mDate;
     private String mTime;
+    private String mLocation;
 
     private TextView mTextViewName;
+    private TextView mTextViewAddress;
     private TextView mTextViewDate;
     private TextView mTextViewTime;
 
     private Button mAddtoCal;
-    private Button mDeleteRes;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,18 +42,22 @@ public class ReservationDetailsActivity extends AppCompatActivity implements Vie
 
         Intent detailIntent=getIntent();
         mName =detailIntent.getStringExtra("RES_NAME");
+        mLocation=detailIntent.getStringExtra("RES_ADDRESS");
         mTime =detailIntent.getStringExtra("RES_TIME");
         mDate =detailIntent.getStringExtra("RES_DATE");
 
         mAddtoCal=findViewById(R.id.btn_add_reservation_to_cal);
-        mDeleteRes=findViewById(R.id.btn_delete_reservation);
+
         mTextViewName =findViewById(R.id.text_view_reservation_det_name);
+        mTextViewAddress=findViewById(R.id.text_view_reservation_det_address);
         mTextViewDate =findViewById(R.id.textView_reservation_det_date_val);
         mTextViewTime =findViewById(R.id.textView_reservation_det_time_val);
 
         mTextViewName.setText(mName);
+        mTextViewAddress.setText(mLocation);
         mTextViewDate.setText(mDate);
         mTextViewTime.setText(mTime);
+
         mAddtoCal.setOnClickListener(this);
 
     }
@@ -67,14 +80,12 @@ public class ReservationDetailsActivity extends AppCompatActivity implements Vie
                     intent.putExtra("allDay",false);
                     intent.putExtra("endTime",endDate.getTime());
                     intent.putExtra("title","Reservation at "+mTextViewName.getText().toString());
+                    intent.putExtra("eventLocation",mTextViewAddress.getText().toString());
                     startActivity(intent);
                 }
                 catch (Exception ex){
                     Log.e("Error Adding Event", "Error in adding event on calendar" + ex.getMessage());
                 }
-
-            case R.id.btn_delete_reservation:
-                break;
             default:
                 break;
         }

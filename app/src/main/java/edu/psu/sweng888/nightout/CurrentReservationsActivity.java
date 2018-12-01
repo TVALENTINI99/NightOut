@@ -39,14 +39,14 @@ public class CurrentReservationsActivity extends AppCompatActivity {
         FirebaseUser user = mAuth.getCurrentUser();
         if(user == null){
             Intent loginIntent = new Intent(CurrentReservationsActivity.this,LoginActivity.class);
-            loginIntent.putExtra("class","ReservationActivity");
+            loginIntent.putExtra("class","CurrentReservationsActivity");
             startActivity(loginIntent);
             mAuth=FirebaseAuth.getInstance();
             user=mAuth.getCurrentUser();
         }
         buildResRecyclerView();
 
-        mFirebaseAccess.getReservations(user.getUid(), new FirebaseCallbackInterface() {
+        mFirebaseAccess.getReservations(user.getUid(), new FirebaseCallbackInterface<Reservation>() {
             @Override
             public void onCallback(ArrayList<Reservation> value) {
                 for(Reservation reservation:value) {

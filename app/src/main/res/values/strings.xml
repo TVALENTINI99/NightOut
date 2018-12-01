@@ -24,7 +24,6 @@
     <string name="text_view_restaurant_time">Time</string>
     <string name="btn_confirm_reservation">Confirm Reservation</string>
     <string name="btn_add_reservaton_to_cal">Add Reservation To Calendar</string>
-    <string name="btn_delete_reservation">Delete Reservation</string>
     <!-- Invoices -->
     <string name="text_view_invoice_date">MM/DD/YYYY</string>
     <string name="text_view_place">Burgatory</string>
