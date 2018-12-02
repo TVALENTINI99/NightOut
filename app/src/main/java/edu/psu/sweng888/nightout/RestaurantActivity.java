@@ -2,6 +2,7 @@ package edu.psu.sweng888.nightout;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -98,10 +99,39 @@ public class RestaurantActivity extends AppCompatActivity {
 
         mPlaceNameTextView.setText(place.getName());
         mPlaceAddressTextView.setText(place.getAddress());
-        mPlacePhoneTextView.setText(place.getPhoneNumber());
-        mPlaceWebsiteTextView.setText(place.getWebsiteUri().toString());
-        mPlacePriceTextView.setText(place.getPriceLevel());
-        mPlaceRatingTextView.setText(String.valueOf(place.getRating()));
+
+        CharSequence phone = place.getPhoneNumber();
+        Uri website = place.getWebsiteUri();
+        int price = place.getPriceLevel();
+        float rating = place.getRating();
+
+        if (phone != null) {
+            mPlacePhoneTextView.setText(phone);
+        }
+
+        if (website != null) {
+            mPlaceWebsiteTextView.setText(website.toString());
+        }
+
+        if (price >= 0) {
+            if (price == 1) {
+                mPlacePriceTextView.setText("$");
+            }
+            else if (price == 2) {
+                mPlacePriceTextView.setText("$$");
+            }
+            else if (price == 3) {
+                mPlacePriceTextView.setText("$$$");
+            }
+            else if (price == 4) {
+                mPlacePriceTextView.setText("$$$$");
+            }
+        }
+
+        if (rating > 0) {
+            mPlaceRatingTextView.setText(String.valueOf(rating) + "/5.0");
+        }
+
 
     }
 
