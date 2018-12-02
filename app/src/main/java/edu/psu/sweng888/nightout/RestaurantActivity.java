@@ -34,6 +34,10 @@ public class RestaurantActivity extends AppCompatActivity {
     private GeoDataClient mGeoDataClient;
     private TextView mPlaceNameTextView;
     private TextView mPlaceAddressTextView;
+    private TextView mPlacePhoneTextView;
+    private TextView mPlaceWebsiteTextView;
+    private TextView mPlacePriceTextView;
+    private TextView mPlaceRatingTextView;
     private Button mReservationBtn;
 
     private ArrayList<Bitmap> photoList = new ArrayList<>();
@@ -48,6 +52,10 @@ public class RestaurantActivity extends AppCompatActivity {
 
         mPlaceNameTextView = findViewById(R.id.text_view_place_name);
         mPlaceAddressTextView = findViewById(R.id.text_view_place_address);
+        mPlacePhoneTextView = findViewById(R.id.text_view_place_phone);
+        mPlaceWebsiteTextView = findViewById(R.id.text_view_place_website);
+        mPlacePriceTextView = findViewById(R.id.text_view_place_price);
+        mPlaceRatingTextView = findViewById(R.id.text_view_place_rating);
         mReservationBtn = findViewById(R.id.btn_reserve);
 
         final Intent intent = getIntent();
@@ -71,7 +79,6 @@ public class RestaurantActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.horizontal_recycler_view);
         adapter = new PlaceRecyclerViewAdapter(this, photoList);
-//        adapter.notifyDataSetChanged();
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setAdapter(adapter);
@@ -86,13 +93,15 @@ public class RestaurantActivity extends AppCompatActivity {
             }
         });
     }
-    //TODO: Add more place details, add multiple scrollable photos
-    private void onPlaceFound(Place place) {
 
-//        getPhotos(place.getId());
+    private void onPlaceFound(Place place) {
 
         mPlaceNameTextView.setText(place.getName());
         mPlaceAddressTextView.setText(place.getAddress());
+        mPlacePhoneTextView.setText(place.getPhoneNumber());
+        mPlaceWebsiteTextView.setText(place.getWebsiteUri().toString());
+        mPlacePriceTextView.setText(place.getPriceLevel());
+        mPlaceRatingTextView.setText(String.valueOf(place.getRating()));
 
     }
 
@@ -105,22 +114,7 @@ public class RestaurantActivity extends AppCompatActivity {
                 PlacePhotoMetadataResponse photos = task.getResult();
                 // Get the PlacePhotoMetadataBuffer (metadata for all of the photos).
                 PlacePhotoMetadataBuffer photoMetadataBuffer = photos.getPhotoMetadata();
-                // Get the first photo in the list.
-//                PlacePhotoMetadata photoMetadata = photoMetadataBuffer.get(0);
-//                // Get the attribution text.
-//                CharSequence attribution = photoMetadata.getAttributions();
-//                // Get a full-size bitmap for the photo.
-//                Task<PlacePhotoResponse> photoResponse = mGeoDataClient.getPhoto(photoMetadata);
-//                photoResponse.addOnCompleteListener(new OnCompleteListener<PlacePhotoResponse>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<PlacePhotoResponse> task) {
-//                        PlacePhotoResponse photo = task.getResult();
-//                        Bitmap bitmap = photo.getBitmap();
-//                        photoList.add(bitmap);
-//                        adapter.notifyDataSetChanged();
-//                    }
-//                });
-
+                // Get the photos
                 for (int i = 0; i < photoMetadataBuffer.getCount(); i++) {
 
                     PlacePhotoMetadata photoMetadata = photoMetadataBuffer.get(i);

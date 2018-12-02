@@ -35,6 +35,38 @@
         android:text="TextView"
         app:layout_constraintTop_toBottomOf="@+id/text_view_place_name" />
 
+    <TextView
+        android:id="@+id/text_view_place_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="TextView"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_place_address" />
+
+    <TextView
+        android:id="@+id/text_view_place_website"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="TextView"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_place_phone" />
+
+    <TextView
+        android:id="@+id/text_view_place_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="TextView"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_place_website" />
+
+    <TextView
+        android:id="@+id/text_view_place_rating"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="TextView"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_place_price" />
+
     <Button
         android:id="@+id/btn_reserve"
         android:layout_width="wrap_content"
