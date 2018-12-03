@@ -82,6 +82,7 @@ public class ReservationDetailsActivity extends AppCompatActivity implements Vie
                     intent.putExtra("title","Reservation at "+mTextViewName.getText().toString());
                     intent.putExtra("eventLocation",mTextViewAddress.getText().toString());
                     startActivity(intent);
+                    finish();
                 }
                 catch (Exception ex){
                     Log.e("Error Adding Event", "Error in adding event on calendar" + ex.getMessage());
