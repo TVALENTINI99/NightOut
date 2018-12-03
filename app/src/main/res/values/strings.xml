@@ -33,5 +33,10 @@
     <string name="btn_reserve">Make a Reservation</string>
     <string name="facebook_app_id">1937944086292576</string>
     <string name="fb_login_protocol_scheme">fb1937944086292576</string>
+    <string name="text_phone">Phone:</string>
+    <string name="text_website">Website:</string>
+    <string name="text_price">Price:</string>
+    <string name="text_rating">Rating:</string>
+    <string name="text_default">N/A</string>
 
 </resources>

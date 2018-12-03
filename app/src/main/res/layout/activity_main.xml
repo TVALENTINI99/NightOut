@@ -6,19 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/btn_search"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/btn_search_restaurants"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
-
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="wrap_content"
@@ -32,17 +19,86 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/black_and_white_city_at_night" />
 
-    <Button
-        android:id="@+id/btn_view_reservations"
-        android:layout_width="0dp"
+    <RelativeLayout
+        android:id="@+id/layout_search"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="32dp"
-        android:text="@string/btn_view_reservations"
+        app:layout_constraintBottom_toTopOf="@+id/layout_invoices"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" >
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="71dp"
+            android:layout_height="match_parent"
+            android:layout_alignBottom="@+id/btn_search"
+            android:layout_alignParentTop="true"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/search_icon" />
+
+        <Button
+            android:id="@+id/btn_search"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_search_restaurants"
+            android:layout_toEndOf="@+id/imageView6"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="16dp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_invoices"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/layout_reservations"
+        app:layout_constraintTop_toBottomOf="@+id/layout_search" >
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="71dp"
+            android:layout_height="match_parent"
+            android:layout_alignBottom="@+id/btn_view_invoices"
+            android:layout_alignParentTop="true"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/dollar_icon" />
+
+        <Button
+            android:id="@+id/btn_view_invoices"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/imageView5"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="16dp"
+            android:text="@string/btn_view_invoices" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_reservations"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/btn_login"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/layout_invoices">
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="71dp"
+            android:layout_height="match_parent"
+            android:layout_alignBottom="@+id/btn_view_reservations"
+            android:layout_alignParentTop="true"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/calendar_icon" />
+
+        <Button
+            android:id="@+id/btn_view_reservations"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="16dp"
+            android:layout_toEndOf="@+id/imageView4"
+            android:text="@string/btn_view_reservations" />
+
+    </RelativeLayout>
+
 
     <Button
         android:id="@+id/btn_login"
@@ -56,17 +112,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/btn_view_invoices"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="@string/btn_view_invoices"
-        app:layout_constraintBottom_toTopOf="@+id/btn_view_reservations"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_search" />
 </android.support.constraint.ConstraintLayout>
