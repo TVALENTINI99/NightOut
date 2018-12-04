@@ -2,6 +2,7 @@ package edu.psu.sweng888.nightout;
 
 import android.content.Intent;
 import android.provider.CalendarContract;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,6 +28,8 @@ public class ReservationDetailsActivity extends AppCompatActivity implements Vie
     private String mTime;
     private String mLocation;
 
+    private ActionBar mActionBar;
+
     private TextView mTextViewName;
     private TextView mTextViewAddress;
     private TextView mTextViewDate;
@@ -39,6 +42,9 @@ public class ReservationDetailsActivity extends AppCompatActivity implements Vie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reservation_details);
+
+        mActionBar=getSupportActionBar();
+        mActionBar.setTitle(R.string.reservation_details);
 
         Intent detailIntent=getIntent();
         mName =detailIntent.getStringExtra("RES_NAME");

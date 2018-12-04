@@ -1,10 +1,18 @@
 <resources>
     <string name="app_name">Night Out</string>
 
+    <!-- Header Names -->
+    <string name="login">Login/Logout of Night Out</string>
+    <string name="current_reservations">Current Reservations</string>
+    <string name="reservation_details">Reservation Details</string>
+    <string name="reservation">Make a Reservation</string>
+    <string name="current_invoices">Current Invoices</string>
+    <string name="invoice_details">Invoice Details</string>
+    <string name="restaurant">Restaurant</string>
     <!-- Main -->
     <string name="btn_search_restaurants">Search For Places</string>
     <string name="btn_view_reservations">View Current Reservations</string>
-    <string name="btn_login">Login</string>
+    <string name="btn_login">Login/Logout</string>
     <string name="btn_view_invoices">View Invoices</string>
     <!-- Login -->
     <string name="btn_login_facebook">Login With Facebook</string>

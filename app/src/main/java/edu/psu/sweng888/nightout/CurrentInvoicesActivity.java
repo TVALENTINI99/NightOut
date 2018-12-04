@@ -1,6 +1,7 @@
 package edu.psu.sweng888.nightout;
 
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -27,6 +28,7 @@ public class CurrentInvoicesActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private InvoiceRecyclerViewAdapter recyclerViewAdapter;
     private ArrayList<Invoice> invoiceDataList=new ArrayList<>();
+    private ActionBar mActionBar;
     private static final String TAG = "CurrentInvoicesActivity";
 
     @Override
@@ -34,8 +36,12 @@ public class CurrentInvoicesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_current_invoices);
 
+        mActionBar=getSupportActionBar();
+        mActionBar.setTitle(R.string.current_invoices);
+
         mFirebaseAccess=new FirebaseAccess();
         mAuth=FirebaseAuth.getInstance();
+        //TODO:In Real Life an API would be provided for businesses to do this, since we are not in production we are fake loading them
         //invoiceLoadingForTesting();
         FirebaseUser user = mAuth.getCurrentUser();
         if(user == null){

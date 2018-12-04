@@ -1,7 +1,9 @@
 package edu.psu.sweng888.nightout;
 
+
 import android.app.Activity;
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,6 +26,8 @@ public class InvoiceDetailsActivity extends AppCompatActivity implements View.On
     private String mDate;
     private String mTotal;
 
+    private ActionBar mActionBar;
+
     private TextView mTextViewName;
     private TextView mTextViewDate;
     private TextView mTextViewTotal;
@@ -37,6 +41,9 @@ public class InvoiceDetailsActivity extends AppCompatActivity implements View.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_invoice_details);
+
+        mActionBar=getSupportActionBar();
+        mActionBar.setTitle(R.string.invoice_details);
 
         Intent detailIntent=getIntent();
         mName =detailIntent.getStringExtra("INVOICE_NAME");

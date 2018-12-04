@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.nfc.Tag;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -59,12 +60,17 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private Intent callerIntent;
 
+    private ActionBar mActionBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
         AppEventsLogger.activateApp(this);
         setContentView(R.layout.activity_login);
+
+        mActionBar=getSupportActionBar();
+        mActionBar.setTitle(R.string.login);
 
 
         mAuth = FirebaseAuth.getInstance();

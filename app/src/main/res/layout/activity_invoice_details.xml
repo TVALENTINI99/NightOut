@@ -39,11 +39,13 @@
                 android:hint="@string/text_view_date"
                 android:inputType="date"
                 android:textColor="@color/colorSecondaryText"
-                android:textSize="12sp"
+                android:textSize="24sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.8"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.476" />
 
             <TextView
                 android:id="@+id/textView_invoice_det_date"
@@ -55,6 +57,7 @@
                 android:layout_marginBottom="8dp"
                 android:text="@string/text_view_invoice_date"
                 android:textColor="@color/colorSecondaryText"
+                android:textSize="24sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/textView_invoice_det_date_val"
                 app:layout_constraintStart_toStartOf="parent"
@@ -75,6 +78,7 @@
                 android:layout_marginBottom="8dp"
                 android:text="@string/text_view_invoice_total"
                 android:textColor="@color/colorSecondaryText"
+                android:textSize="24sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/textView_invoice_det_total_val"
                 app:layout_constraintHorizontal_bias="0.347"
@@ -88,17 +92,16 @@
                 android:layout_height="34dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="68dp"
                 android:ems="10"
                 android:focusable="false"
                 android:hint="@string/text_view_time"
                 android:inputType="time"
                 android:textColor="@color/colorSecondaryText"
-                android:textSize="12sp"
+                android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.765"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.433" />
+                app:layout_constraintTop_toTopOf="parent" />
 
         </android.support.constraint.ConstraintLayout>
     </LinearLayout>
@@ -112,7 +115,7 @@
         android:layout_marginEnd="8dp"
         android:text="TextView"
         android:textColor="@color/colorPrimaryText"
-        android:textSize="18sp"
+        android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

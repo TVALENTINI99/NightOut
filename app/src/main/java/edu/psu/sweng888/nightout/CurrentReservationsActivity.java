@@ -1,6 +1,7 @@
 package edu.psu.sweng888.nightout;
 
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -25,6 +26,7 @@ public class CurrentReservationsActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAccess mFirebaseAccess;
     private RecyclerView mRecyclerView;
+    private ActionBar mActionBar;
     private ReservationRecyclerViewAdapter recyclerViewAdapter;
     private ArrayList<Reservation> reservationDataList=new ArrayList<>();
     private static final String TAG = "CurrentReservationsActivity";
@@ -33,6 +35,9 @@ public class CurrentReservationsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_current_reservations);
+
+        mActionBar=getSupportActionBar();
+        mActionBar.setTitle(R.string.current_reservations);
 
         mFirebaseAccess=new FirebaseAccess();
         mAuth=FirebaseAuth.getInstance();

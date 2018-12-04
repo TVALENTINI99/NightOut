@@ -2,6 +2,7 @@ package edu.psu.sweng888.nightout;
 
 import android.content.Intent;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -27,6 +28,7 @@ import edu.psu.sweng888.nightout.time_picker.TimePickerInteractionInterface;
 public class ReservationActivity extends AppCompatActivity implements TimePickerInteractionInterface,DatePickerInteractionInterface {
 
     private Button mReservationButton;
+    private ActionBar mActionBar;
     private EditText mDateEditText;
     private EditText mTimeEditText;
     private TextView mPlaceNameTextView;
@@ -39,6 +41,9 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reservation);
         final Intent intent = getIntent();
+
+        mActionBar=getSupportActionBar();
+        mActionBar.setTitle(R.string.reservation);
 
         mAuth = FirebaseAuth.getInstance();
 
