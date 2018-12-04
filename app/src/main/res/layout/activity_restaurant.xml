@@ -19,12 +19,13 @@
         android:id="@+id/text_view_place_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:text="TextView"
-        android:textColor="@android:color/black"
-        android:textSize="18sp"
+        android:textColor="@color/colorPrimaryText"
+        android:textSize="24sp"
         android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/horizontal_recycler_view" />
 
     <TextView
@@ -33,6 +34,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="@string/text_default"
+        android:textColor="@color/colorSecondaryText"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_view_place_name" />
 
     <TextView
@@ -41,6 +45,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="@string/text_phone"
+        android:textColor="@color/colorSecondaryText"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_view_place_address" />
 
@@ -50,6 +56,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="@string/text_default"
+        android:textColor="@color/colorSecondaryText"
+        android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/text_view_phone_static"
         app:layout_constraintTop_toBottomOf="@+id/text_view_place_address" />
 
@@ -59,6 +67,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="@string/text_website"
+        android:textColor="@color/colorSecondaryText"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_view_phone_static" />
 
@@ -68,6 +78,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="@string/text_default"
+        android:textColor="@color/colorSecondaryText"
+        android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/text_view_web_static"
         app:layout_constraintTop_toBottomOf="@+id/text_view_place_phone" />
 
@@ -77,6 +89,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="@string/text_price"
+        android:textColor="@color/colorSecondaryText"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_view_web_static" />
 
@@ -86,6 +100,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="@string/text_default"
+        android:textColor="@color/colorSecondaryText"
+        android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/text_view_price_static"
         app:layout_constraintTop_toBottomOf="@+id/text_view_place_website" />
 
@@ -95,6 +111,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="@string/text_rating"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_view_price_static" />
 
@@ -104,6 +121,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="@string/text_default"
+        android:textColor="@color/colorSecondaryText"
+        android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/text_view_rating_static"
         app:layout_constraintTop_toBottomOf="@+id/text_view_place_price" />
 
@@ -114,7 +133,9 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="32dp"
+        android:backgroundTint="@color/colorAccent"
         android:text="@string/btn_reserve"
+        android:textColor="@color/colorTextIcons"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
