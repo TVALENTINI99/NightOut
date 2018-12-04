@@ -238,13 +238,23 @@ public class LoginActivity extends AppCompatActivity {
                     //Toast.makeText(LoginActivity.this, "USER is signed in with google", Toast.LENGTH_LONG).show();
                     mGoogleTextView.setText(R.string.btn_logout_google);
                     mBtnLoginFacebook.setVisibility(View.GONE);
-                    return;
+                    if (callerIntent.hasExtra("class")){
+                        finish();
+                    }
+                    else{
+                        return;
+                    }
                 }
                 else if (userInfo.getProviderId().equals("facebook.com")) {
                     //Toast.makeText(LoginActivity.this, "USER is signed in with facebook", Toast.LENGTH_LONG).show();
                     mBtnLoginFacebook.setText(R.string.btn_logout_facebook);
                     mBtnLoginGoogle.setVisibility(View.GONE);
-                    return;
+                    if (callerIntent.hasExtra("class")){
+                        finish();
+                    }
+                    else{
+                        return;
+                    }
                 }
             }
             if (callerIntent.hasExtra("class")){

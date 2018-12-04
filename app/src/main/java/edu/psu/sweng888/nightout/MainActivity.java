@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         FirebaseUser user=mAuth.getCurrentUser();
         if(user == null){
             Intent loginIntent = new Intent(MainActivity.this,LoginActivity.class);
-            loginIntent.putExtra("class","ReservationActivity");
+            loginIntent.putExtra("class","MainActivity");
             startActivity(loginIntent);
             mAuth=FirebaseAuth.getInstance();
             user=mAuth.getCurrentUser();
