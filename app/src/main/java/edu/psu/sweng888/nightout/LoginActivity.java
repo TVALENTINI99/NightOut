@@ -88,13 +88,13 @@ public class LoginActivity extends AppCompatActivity {
                 AccessToken accessToken = AccessToken.getCurrentAccessToken();
                 boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
                 if (!isLoggedIn) {
-                    Toast.makeText(LoginActivity.this, "Calling Facebook External API To Login", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(LoginActivity.this, "Calling Facebook External API To Login", Toast.LENGTH_SHORT).show();
                     mFacebookCallbackManager = CallbackManager.Factory.create();
                     mBtnLoginFacebook.setReadPermissions("email", "public_profile");
                     signInFacebook();
                 }
                 else {
-                    Toast.makeText(LoginActivity.this, "Calling Facebook External API To Logout", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(LoginActivity.this, "Calling Facebook External API To Logout", Toast.LENGTH_SHORT).show();
                     FirebaseAuth.getInstance().signOut();
                     mBtnLoginGoogle.setVisibility(View.VISIBLE);
                 }
@@ -104,7 +104,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if((mGoogleTextView.getText().toString()).equals(getString(R.string.btn_login_google))){
-                    Toast.makeText(LoginActivity.this,"Calling Google External API to Login", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(LoginActivity.this,"Calling Google External API to Login", Toast.LENGTH_SHORT).show();
                     GoogleSignInOptions gso =new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                             .requestIdToken(getString(R.string.default_web_client_id))
                             .requestEmail()
@@ -113,7 +113,7 @@ public class LoginActivity extends AppCompatActivity {
                     signInGoogle();
                 }
                 else{
-                    Toast.makeText(LoginActivity.this,"Calling Google External API to Logout", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(LoginActivity.this,"Calling Google External API to Logout", Toast.LENGTH_SHORT).show();
                     FirebaseAuth.getInstance().signOut();
                     mGoogleTextView.setText(R.string.btn_login_google);
                     mBtnLoginFacebook.setVisibility(View.VISIBLE);
@@ -235,13 +235,13 @@ public class LoginActivity extends AppCompatActivity {
         if (user != null) {
             for (UserInfo userInfo : FirebaseAuth.getInstance().getCurrentUser().getProviderData()) {
                 if (userInfo.getProviderId().equals("google.com")) {
-                    Toast.makeText(LoginActivity.this, "USER is signed in with google", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(LoginActivity.this, "USER is signed in with google", Toast.LENGTH_LONG).show();
                     mGoogleTextView.setText(R.string.btn_logout_google);
                     mBtnLoginFacebook.setVisibility(View.GONE);
                     return;
                 }
                 else if (userInfo.getProviderId().equals("facebook.com")) {
-                    Toast.makeText(LoginActivity.this, "USER is signed in with facebook", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(LoginActivity.this, "USER is signed in with facebook", Toast.LENGTH_LONG).show();
                     mBtnLoginFacebook.setText(R.string.btn_logout_facebook);
                     mBtnLoginGoogle.setVisibility(View.GONE);
                     return;
